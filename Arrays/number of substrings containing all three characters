@@ -1,0 +1,21 @@
+class Solution {
+    public int numberOfSubstrings(String s) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        int i =0 ;
+        int j = 0;
+        int cnt= 0;
+        while(j<s.length()){
+            map.put(s.charAt(j), map.getOrDefault(s.charAt(j),0)+1);
+            while(map.size()==3){
+                cnt = cnt + s.length() - j;   // means agr if we find then ustoh agle wale v sare possible case hon ge //imp line (not cnt++) 
+                map.put(s.charAt(i), map.get(s.charAt(i))-1);
+                if(map.get(s.charAt(i))==0){
+                    map.remove(s.charAt(i));
+                }
+                i++;
+            }
+            j++;
+        }
+        return cnt;
+    }
+}
