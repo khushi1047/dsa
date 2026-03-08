@@ -1,0 +1,45 @@
+class Solution {
+    //brute force : my approach for this question is that firstly put all String in map
+    // traversing each element of nums and flip vice-cerse 0,1 to check if exists return else reset it
+    public String findDifferentBinaryString(String[] nums) {
+        HashMap<String, Integer> map = new HashMap<>();
+        for(int i = 0;i<nums.length;i++){
+            map.put(nums[i], 1);
+        }
+        for(int i = 0;i<nums.length;i++){
+
+            StringBuilder word = new StringBuilder(nums[i]);
+            for(int j = 0;j<word.length();j++){
+                if(word.charAt(j)=='0'){
+                    word.setCharAt(j,'1');
+                    if(!map.containsKey(word.toString())){
+                        return word.toString();
+                    }
+                    else{
+                        word.setCharAt(j,'0');
+                    }
+                }
+                else{
+                    word.setCharAt(j,'0');
+                    if(!map.containsKey(word.toString())){
+                        return word.toString();
+                    }
+                    else{
+                        word.setCharAt(j,'1');
+                    }
+                }
+            }
+        }
+        return "1";
+
+
+
+
+        // optimised
+        StringBuilder str = new StringBuilder();
+        for(int i = 0;i<nums.length;i++){
+            str.append((nums[i].charAt(i)=='0')? '1':'0'); 
+        }
+        return str.toString();
+    }
+}
