@@ -22,7 +22,7 @@ class Main{
 }
 
 
-//Brute force
+//Brute force : [Naive Approach] Using Nested Loops - O(n^2) Time and O(1) Space
 class Main {
 
     static ArrayList<Integer> leaders(int[] arr) {
