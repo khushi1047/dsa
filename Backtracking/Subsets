@@ -1,0 +1,24 @@
+class Solution {
+
+    public void helper(List<List<Integer>> ans, List<Integer> combinations,int nums[],int n, int index){
+
+        if(index>=n){
+            ans.add(new ArrayList<>(combinations));
+            return;
+        }
+        combinations.add(nums[index]);
+        helper(ans, combinations, nums, n, index+1);
+        combinations.remove(combinations.size()-1);
+        helper(ans,combinations, nums,n, index+1);
+        
+    }
+
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> combinations = new ArrayList<>();
+        int n = nums.length;
+
+        helper(ans,combinations, nums,n, 0);
+        return ans;
+    }
+}
