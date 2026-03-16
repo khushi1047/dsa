@@ -1,0 +1,24 @@
+class Solution {
+    public void helper(List<List<Integer>> ans, List<Integer> combinations, int nums[],int n, int index ){
+        
+        ans.add(new ArrayList<>(combinations));
+        
+        for(int i = index ;i<n;i++){
+           
+            if(i>index && nums[i]==nums[i-1]) {
+                continue;
+            }
+             combinations.add(nums[i]);
+            helper(ans,combinations,nums,n,i+1);
+            combinations.remove(combinations.size()-1);
+        }
+    }
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> combinations = new ArrayList<>();
+        int n = nums.length;
+        Arrays.sort(nums);
+        helper(ans, combinations, nums,n, 0);
+        return ans;
+    }
+}
