@@ -1,1 +1,25 @@
+class Solution {
 
+    ArrayList<String> list = new ArrayList<>();
+
+    public void fun(int n, String str, int open , int close){
+        if(str.length()==2*n && open==n && close==n){
+            list.add(str);
+            return;
+        }
+
+        if(open<n){
+            fun(n,str+"(",open+1,close);
+        }
+
+         if(close<open){
+          fun(n,str+")",open,close+1);
+        }
+    }
+
+    public List<String> generateParenthesis(int n) {
+        fun(n,"",0,0);
+        return list;
+    }
+   
+}
