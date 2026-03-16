@@ -1,0 +1,28 @@
+class Solution {
+    public void helper(List<List<Integer>> ans, boolean[] visited, int[] nums, List<Integer> permutations){
+
+        if(permutations.size()==nums.length){
+            ans.add(new ArrayList<>(permutations));
+            return;
+        }
+
+        for(int i = 0;i<nums.length;i++){
+            if(i>0 && nums[i]==nums[i-1] && !visited[i-1]) continue;
+            if(!visited[i]){
+                visited[i] = true;
+                permutations.add(nums[i]);
+                helper(ans, visited , nums,permutations);
+                permutations.remove(permutations.size()-1);
+                visited[i] = false;
+            }
+        }
+    }
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> permutations = new ArrayList<>();
+        boolean[] visited = new boolean[nums.length];
+        Arrays.sort(nums);
+        helper(ans, visited,nums,permutations);
+        return ans;
+    }
+}
