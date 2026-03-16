@@ -1,0 +1,32 @@
+class Solution {
+
+    public void helper(int[] candidates,  List<List<Integer>> ans ,List<Integer> combinations , int target, int index ){
+        
+        if(index==candidates.length || target<0){ 
+            return;
+        }
+        
+        if(target==0) {
+                ans.add(new ArrayList<>(combinations));
+                return;
+            }
+
+        if(candidates[index]<=target){
+            combinations.add(candidates[index]);
+            helper(candidates, ans, combinations,target-candidates[index],index);
+            combinations.remove(combinations.size()-1);
+
+        }        
+        helper(candidates, ans, combinations,target,index+1);
+    }
+
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        
+        List<List<Integer>> ans  = new ArrayList<>();
+        List<Integer> combinations = new ArrayList<>();
+        int index = 0 ;
+        helper(candidates, ans, combinations , target , index);
+        return ans;
+
+    }
+}
