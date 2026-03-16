@@ -1,0 +1,78 @@
+class Solution {
+
+    public boolean isSafe(char[][] board, int row, int col){
+        
+        int n = board.length;
+        for(int j = 0; j<n;j++){
+            if(board[row][j]=='Q') {
+                return false;
+            }
+        }
+
+        for(int i = 0;i<n;i++){
+            if(board[i][col]=='Q'){
+                return false;
+            }
+        }
+
+        for(int i = row-1 , j = col + 1;i>=0 && j<n;i--,j++){
+            if(board[i][j]=='Q'){
+                return false;
+            }
+        }
+
+        for(int i = row+1, j = col + 1;i<n && j<n;i++,j++){
+            if(board[i][j]=='Q'){
+                return false;
+            }
+        }
+
+        for(int i = row+1 , j = col - 1;i<n && j>=0;i++,j--){
+            if(board[i][j]=='Q'){
+                return false;
+            }
+        }
+
+        for(int i = row-1,j=col-1;i>=0 && j>=0 ;i--,j--){
+            if(board[i][j]=='Q'){
+                return false;
+            }
+        }
+        return true;
+
+    }
+    public void helper(char[][] board, int row, List<List<String>> ans){
+
+        List<String> combinations = new ArrayList<>();
+        if(row == board.length){
+            for(int i = 0;i< board.length;i++){
+                    combinations.add(new String(board[i]));
+            }
+            ans.add(new ArrayList<>(combinations));
+            return;
+        }
+
+        int n = board.length;
+
+        for(int col = 0;col<n;col++ ){
+            if(isSafe(board, row, col)){
+                board[row][col] = 'Q';
+                helper(board, row+1, ans);
+                board[row][col] = '.';  //backtrack agr pehle do ro ke baad col 4 tak mera invalid aa jaye
+            }
+        }
+    }
+
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> ans = new ArrayList<>();
+        char[][] board = new char[n][n];
+        for(int i = 0;i<board.length;i++){
+            for(int j = 0;j<board.length;j++){
+                board[i][j] = '.';
+            }
+        }
+
+        helper(board, 0, ans);
+        return ans;
+    }
+}
