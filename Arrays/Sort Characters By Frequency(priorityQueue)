@@ -1,0 +1,75 @@
+// class Number implements Comparable<Number> {
+//         char ch;
+//         int freq;
+//         Number(char ch, int freq){
+//             this.ch= ch;
+//             this.freq = freq;
+//         }
+
+//         public int compareTo(Number that){
+//             return that.freq-this.freq;
+//         }
+// }
+
+// class Solution {
+//     public String frequencySort(String s) {
+//         HashMap<Character,Integer> map = new HashMap<>();
+//         PriorityQueue<Number> pq = new PriorityQueue<>();
+
+//         for(int i = 0;i<s.length();i++){
+//             map.put(s.charAt(i),map.getOrDefault(s.charAt(i),0)+1);
+//         }
+//         for(Map.Entry<Character, Integer> entry : map.entrySet()){
+//            Number number = new Number(entry.getKey(),entry.getValue());
+//            pq.offer(number);
+//         }
+
+//         char ch[] = new char[s.length()];
+//         int index = 0;
+//         while(!pq.isEmpty()){
+//             Number number = pq.poll();
+//             int c = 0;
+//             while(c!=number.freq){
+//                 ch[index] = number.ch;
+//                 c++;
+//                 index++;
+//             } 
+            
+//         }
+        
+//         String str = new String(ch);
+//         return str;
+//     }
+// }
+
+class Solution {
+    public String frequencySort(String s) {
+        // Step 1: Frequency count
+        Map<Character, Integer> map = new HashMap<>();
+        for (char c : s.toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+
+        // Step 2: Max heap based on frequency
+        PriorityQueue<Character> pq = new PriorityQueue<>(
+            (a, b) -> map.get(b) - map.get(a)   // descending order of frequency
+        );
+
+        // Step 3: Add all characters to PQ
+        for (char c : map.keySet()) {
+            pq.offer(c);
+        }
+
+        // Step 4: Build the result
+        StringBuilder sb = new StringBuilder();
+        while (!pq.isEmpty()) {
+            char ch = pq.poll();
+            int freq = map.get(ch);
+            for (int i = 0; i < freq; i++) {
+                sb.append(ch);
+            }
+        }
+
+        return sb.toString();
+    }
+}
