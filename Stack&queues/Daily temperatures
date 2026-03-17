@@ -1,0 +1,23 @@
+class Solution {
+    public int[] dailyTemperatures(int[] temperatures) {
+        // Stack<Integer> st = new Stack<>();
+        Stack<Integer> st_idx = new Stack<>();
+        int[] ans = new int[temperatures.length];
+        for(int i=temperatures.length-1;i>=0;i--){
+            while(st_idx.size()!=0 && temperatures[st_idx.peek()]<=temperatures[i]){
+                 st_idx.pop();
+            }
+            if(st_idx.size()==0){
+                ans[i] = 0;
+
+            }
+            else{
+                ans[i] = st_idx.peek()-i;
+            }
+            // st.push(temperatures[i]);
+            st_idx.push(i);
+            
+        }
+        return ans;
+    }
+}
