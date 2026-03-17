@@ -1,0 +1,33 @@
+class Solution {
+
+    public void sort(String word){
+
+    }
+    public List<List<String>> groupAnagrams(String[] strs) {
+        HashMap<String, List<String>> map = new HashMap<>();
+
+        // sort : aet , aet, ant,aet,ant,abt
+        // eat, 
+        // is sort(tea).equals(element present in tea) map : key : eat,tea
+        // tan create another key put val (tan)
+        // move to naother sort(of ate)macth es the vle presen tin map add in map
+
+        for(int i = 0;i<strs.length;i++){
+            String word=strs[i];
+            char[] str = word.toCharArray();
+            Arrays.sort(str);
+            String sortedWord = new String(str);
+            if(!map.containsKey(sortedWord)){
+                map.put(sortedWord, new ArrayList<>());
+            }
+            map.get(sortedWord).add(word);
+
+        }
+
+        List<List<String>> result = new ArrayList<>();
+        for(List<String> s : map.values()){
+            result.add(s);
+        }
+        return result;
+    }
+}
