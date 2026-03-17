@@ -1,0 +1,79 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    
+    public ListNode removeNodes(ListNode head) {
+    //     ListNode curr = head;
+    //     ListNode prev = null , N = null;
+    //     while(curr!=null){
+    //         N = curr.next;
+    //         curr.next = prev;
+    //         prev = curr;
+    //         curr = N;    
+    //     }
+    //     head = prev;
+    //     Stack<ListNode> stack = new Stack<>();
+    //     stack.push(head);
+    //     ListNode temp = head.next;
+    //     while(temp!=null){
+    //         if(temp.val >= stack.peek().val){
+    //             stack.push(temp);
+               
+    //         }
+    //          temp=temp.next;
+    //     }
+    //     ListNode res = new ListNode(0);
+    //     ListNode ans = res;
+    //     while(!stack.isEmpty()){
+    //         ans.next = stack.pop();
+    //         ans = ans.next;
+    //     }
+    //     ans.next = null;
+    // return res.next;
+
+       ListNode curr = head, prev = null, next = null;
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        // Step 2: Filter nodes (keep nodes >= max so far)
+        int max = Integer.MIN_VALUE;
+        ListNode dummy = new ListNode(0);
+        ListNode temp = dummy;
+        head = prev; // head now points to reversed list
+
+        while (head != null) {
+            if (head.val >= max) {
+                max = head.val;
+                temp.next = head;
+                temp = head; // move `temp` when keeping node
+            }
+            head = head.next; // advance traversal
+        }
+        temp.next = null; // cut dangling links
+
+        // Step 3: Reverse again to restore order
+        curr = dummy.next;
+        prev = null;
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        return prev; 
+
+    }
+}
