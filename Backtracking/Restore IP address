@@ -1,0 +1,42 @@
+class Solution {
+
+    public boolean isValid(String str) {
+        if(str.length() == 0 || str.length() > 3)
+        {
+            return false;
+        } 
+        if(str.length() > 1 && str.charAt(0) == '0'){
+            return false;
+        } 
+        if(Integer.parseInt(str) > 255){
+            return false;
+        }
+        return true;
+    }
+
+    public void helper(String s, int index, StringBuilder path, int dot, List<String> list) {
+        if(dot == 3){
+            String last = s.substring(index);
+            if(isValid(last)){
+                list.add(path.toString() + last);
+            }
+            return;
+        }
+
+        for(int i = index; i < Math.min(index + 3, s.length()); i++){
+            String part = s.substring(index, i + 1);
+            if(isValid(part)){
+                int lenBefore = path.length();
+                path.append(part).append(".");
+                helper(s, i + 1, path, dot + 1, list);
+                path.setLength(lenBefore);   // backtrack
+            }
+        }
+    }
+
+    public List<String> restoreIpAddresses(String s) {
+        List<String> list = new ArrayList<>();
+        helper(s, 0, new StringBuilder(), 0, list);
+        return list;
+    }
+}
