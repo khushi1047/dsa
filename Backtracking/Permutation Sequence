@@ -1,0 +1,30 @@
+class Solution {
+    int cnt = 0;
+    String ans = "";
+    public void backtrack(int n, int k,StringBuilder str, boolean visited[]){
+        if(str.length()==n){
+            cnt++;
+            if(cnt==k){
+                ans = str.toString();
+            }
+            return;
+        }
+        for(int i = 1;i<=n;i++){
+            if(!visited[i]){
+                visited[i] = true;
+                str.append(i);
+                backtrack(n,k,str,visited);
+                str.deleteCharAt(str.length()-1);
+                visited[i] = false;
+            }
+        }
+    }
+    public String getPermutation(int n, int k) {
+        
+        StringBuilder str = new StringBuilder();
+        boolean visited[] = new boolean[n+1];
+        backtrack(n,k, str, visited);
+        return ans;
+        
+    }
+}
