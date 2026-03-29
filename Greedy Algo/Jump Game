@@ -1,0 +1,18 @@
+"I used a greedy approach where I track the farthest index reachable while iterating through the array.
+If at any point the current index exceeds the reachable range, I return false since we can't proceed further.
+Otherwise, I keep updating the maximum reachable index.
+If I complete the traversal, it means the last index is reachable, so I return true.
+This solution runs in O(n) time and O(1) space."
+
+class Solution {
+    public boolean canJump(int[] nums) {
+        int isReach = 0;
+        for(int i = 0;i<nums.length;i++){
+            if(i > isReach){
+                return false;
+            }
+            isReach = Math.max(isReach , i + nums[i]);
+        }
+        return true;
+    }
+}
