@@ -1,0 +1,35 @@
+
+class Intervals{
+    int start;
+    int end;
+    Intervals(int start, int end){
+        this.start = start;
+        this.end = end;
+    }
+}
+class Solution {
+    public int eraseOverlapIntervals(int[][] intervals) {
+        
+        ArrayList<Intervals> list = new ArrayList<>();
+        for(int i = 0;i<intervals.length;i++){
+            int start = intervals[i][0];
+            int end = intervals[i][1];
+            list.add(new Intervals(start,end));
+        }
+        list.sort((a,b)-> a.end - b.end);
+
+        int lastEnd = list.get(0).end;
+        int count = 0;
+        for(int i = 1;i<list.size();i++){
+            Intervals act = list.get(i);
+            if(act.start < lastEnd){
+                count++;
+            }
+            else{
+                lastEnd = act.end;
+            }
+        }
+        return count;
+
+    }
+}
