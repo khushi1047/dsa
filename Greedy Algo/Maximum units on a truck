@@ -1,0 +1,37 @@
+class Pair{
+    int objectNo;
+    int  numberOfUnitsPerBox;
+    Pair(int objectNo, int  numberOfUnitsPerBox){
+        this.objectNo = objectNo;
+        this.numberOfUnitsPerBox = numberOfUnitsPerBox;
+    }
+}
+
+class Solution {
+    public int maximumUnits(int[][] boxTypes, int truckSize) {
+        List<Pair> list = new ArrayList<>();
+        for(int i = 0;i<boxTypes.length;i++){
+            list.add(new Pair(i, boxTypes[i][1]));
+        }
+
+        list.sort((a,b)->b.numberOfUnitsPerBox -  a.numberOfUnitsPerBox);
+
+        int total = 0;
+
+        for(int i = 0;i<list.size();i++){
+            int index = list.get(i).objectNo;
+            int boxes = boxTypes[index][0];
+            int units = boxTypes[index][1];
+            if(boxes <= truckSize){
+                total = total + ( boxes * units);
+                truckSize = truckSize - boxes;
+            }
+            else{
+                total = total + (truckSize * units);
+                break;
+            }
+        }
+
+        return total;
+    }
+}
